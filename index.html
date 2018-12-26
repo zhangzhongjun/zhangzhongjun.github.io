@@ -1,38 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-    <title>自适应的背景图</title>
-    <link href="bootstrap.min.css" rel="stylesheet">
-    <style>
-        html, body {
-            height: 100%;
-        }
-
-        .site-background {
-            position: fixed;
-            height: 100vh;
-            width: 100%;
-            background:url("bg2.jpg") left top transparent;
-            background-size: cover;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-        }
-
-        @media (min-width: 768px) {
-            .site-background {
-                background: url("bg.jpg") no-repeat center center transparent;
-                background-size: cover;
-                -webkit-background-size: cover;
-                -moz-background-size: cover;
-                -o-background-size: cover;
-            }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SSE系统</title>
 </head>
+
 <body>
-<div class="site-background"></div>
+    <input id="txtUserName" name="username" type="text" class="form-control"
+                                       placeholder="请输入用户名"
+                                       oninput="setCookie()">
+<!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
+<script src="./jquery-3.2.1/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="./jquery.cookie.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function setCookie(){
+        var lastUsername = document.getElementById('txtUserName').value
+        $.cookie('username', lastUsername, { expires: 7 });
+    }
+</script>
+
+<script type="text/javascript">
+    // 这里是加载时候的缓存的界面
+    $().ready(function () {
+        GetLastUser();
+    })
+</script>
+
+<script type="text/javascript">
+
+    function GetLastUser() {
+        var usr = $.cookie("username");
+        //如果cookie中有记录，直接写入
+        if (usr != undefined) {
+            document.getElementById('txtUserName').value = usr;
+        } else {
+            //如果没有记录，则置为空
+            document.getElementById('txtUserName').value = "";
+        }
+    }
+</script>
 </body>
+</html>
